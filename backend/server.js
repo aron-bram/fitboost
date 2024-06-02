@@ -1,5 +1,5 @@
 import express from 'express';
-import { Sequelize } from 'sequelize';
+import { Sequelize, DataTypes } from 'sequelize';
 import cors from 'cors';
 
 const app = express();
@@ -16,7 +16,22 @@ const sequelize = new Sequelize({
     host: '/var/run/postgresql',
     port: 5432,
     ssl: true,
-    clientMinMessages: 'notice',
+    dialectOptions: 'notice',
+});
+
+// Define the Employee model to reference an existing table
+const Employee = sequelize.define('Employee', {
+  name: {
+    type: DataTypes.STRING,
+  },
+  position: {
+    type: DataTypes.STRING,
+  },
+  salary: {
+    type: DataTypes.INTEGER,
+  },
+}, {
+  tableName: 'employees',
 });
 
 // Test the database connection
@@ -30,4 +45,42 @@ app.get('/', (_req, res) => {
 
 app.listen(port, () => {
   console.log(`Server running on http://localhost:${port}`);
+});
+
+// Query all employees
+app.get('/employees', async (_req, res) => {
+  try {
+    const employees = await Employee.findAll({
+      attributes: ['name', 'position', 'salary'] 
+    });
+    res.json(employees);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Add a new employee
+app.post('/employees', async (req, res) => {
+  try {
+    const { name, position, salary } = req.body;
+    const newEmployee = await Employee.create({ name, position, salary });
+    res.status(201).json(newEmployee);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+});
+
+// Delete an employee by id
+app.delete('/employees/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const deleted = await Employee.destroy({ where: { id } });
+    if (deleted) {
+      res.status(204).send(); // No Content
+    } else {
+      res.status(404).json({ error: 'Employee not found' });
+    }
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 });
