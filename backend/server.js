@@ -21,6 +21,11 @@ const sequelize = new Sequelize({
 
 // Define the Employee model to reference an existing table
 const Employee = sequelize.define('Employee', {
+  id: {
+    primaryKey: true,
+    autoIncrement: true,
+    type: DataTypes.INTEGER,
+  },
   name: {
     type: DataTypes.STRING,
   },
@@ -32,6 +37,7 @@ const Employee = sequelize.define('Employee', {
   },
 }, {
   tableName: 'employees',
+  timestamps: false,
 });
 
 // Test the database connection
@@ -50,9 +56,7 @@ app.listen(port, () => {
 // Query all employees
 app.get('/employees', async (_req, res) => {
   try {
-    const employees = await Employee.findAll({
-      attributes: ['name', 'position', 'salary'] 
-    });
+    const employees = await Employee.findAll({});
     res.json(employees);
   } catch (err) {
     res.status(500).json({ error: err.message });
