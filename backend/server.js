@@ -1,6 +1,6 @@
-import express from 'express';
-import { Sequelize, DataTypes } from 'sequelize';
-import cors from 'cors';
+import express from "express";
+import { Sequelize, DataTypes } from "sequelize";
+import cors from "cors";
 
 const app = express();
 const port = 5000;
@@ -10,43 +10,48 @@ app.use(express.json());
 
 // Initialize Sequelize
 const sequelize = new Sequelize({
-    dialect: 'postgres',
-    database: 'fitboost',
-    user: 'baron',
-    host: '/var/run/postgresql',
-    port: 5432,
-    ssl: true,
-    dialectOptions: 'notice',
+  dialect: "postgres",
+  database: "fitboost",
+  user: "baron",
+  host: "/var/run/postgresql",
+  port: 5432,
+  ssl: true,
+  dialectOptions: "notice",
 });
 
 // Define the Employee model to reference an existing table
-const Employee = sequelize.define('Employee', {
-  id: {
-    primaryKey: true,
-    autoIncrement: true,
-    type: DataTypes.INTEGER,
+const Employee = sequelize.define(
+  "Employee",
+  {
+    id: {
+      primaryKey: true,
+      autoIncrement: true,
+      type: DataTypes.INTEGER,
+    },
+    name: {
+      type: DataTypes.STRING,
+    },
+    position: {
+      type: DataTypes.STRING,
+    },
+    salary: {
+      type: DataTypes.INTEGER,
+    },
   },
-  name: {
-    type: DataTypes.STRING,
+  {
+    tableName: "employees",
+    timestamps: false,
   },
-  position: {
-    type: DataTypes.STRING,
-  },
-  salary: {
-    type: DataTypes.INTEGER,
-  },
-}, {
-  tableName: 'employees',
-  timestamps: false,
-});
+);
 
 // Test the database connection
-sequelize.authenticate()
-  .then(() => console.log('Database connected'))
-  .catch(err => console.error('Unable to connect to the database:', err));
+sequelize
+  .authenticate()
+  .then(() => console.log("Database connected"))
+  .catch((err) => console.error("Unable to connect to the database:", err));
 
-app.get('/', (_req, res) => {
-  res.send('Hello World!');
+app.get("/", (_req, res) => {
+  res.send("Hello World!");
 });
 
 app.listen(port, () => {
@@ -54,7 +59,7 @@ app.listen(port, () => {
 });
 
 // Query all employees
-app.get('/employees', async (_req, res) => {
+app.get("/employees", async (_req, res) => {
   try {
     const employees = await Employee.findAll({});
     res.json(employees);
@@ -64,7 +69,7 @@ app.get('/employees', async (_req, res) => {
 });
 
 // Add a new employee
-app.post('/employees', async (req, res) => {
+app.post("/employees", async (req, res) => {
   try {
     const { name, position, salary } = req.body;
     const newEmployee = await Employee.create({ name, position, salary });
@@ -75,14 +80,14 @@ app.post('/employees', async (req, res) => {
 });
 
 // Delete an employee by id
-app.delete('/employees/:id', async (req, res) => {
+app.delete("/employees/:id", async (req, res) => {
   try {
     const { id } = req.params;
     const deleted = await Employee.destroy({ where: { id } });
     if (deleted) {
       res.status(204).send(); // No Content
     } else {
-      res.status(404).json({ error: 'Employee not found' });
+      res.status(404).json({ error: "Employee not found" });
     }
   } catch (err) {
     res.status(500).json({ error: err.message });

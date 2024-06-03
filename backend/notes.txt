@@ -1,0 +1,28 @@
+for later:
+- Use mocka testing framework to write tests for both front and backend.
+- Use environment variables for configuration, especially for sensitive information.
+  Create a .env file in the backend directory and use the dotenv package to load it.
+- Set up ESLint and Prettier for consistent code quality and formatting.
+- Set up a CI/CD pipeline using GitHub Actions.
+
+simple example project structure:
+
+my-app/
+├── backend/
+│   ├── node_modules/
+│   ├── src/
+│   │   ├── models/
+│   │   │   └── index.js
+│   │   ├── routes/
+│   │   │   └── index.js
+│   │   ├── config/
+│   │   │   └── database.js
+│   │   └── app.js
+│   ├── .gitignore
+│   ├── package.json
+│   └── package-lock.json
+├── frontend/
+│   ├── web/
+│   ├── mobile/
+├── .gitignore
+└── README.md
