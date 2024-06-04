@@ -1,0 +1,12 @@
+    Backend Integration with Frontend
+        Create API routes in Express.js to handle data requests and responses.
+        Use fetch or axios in React Native/Web to interact with the backend.
+
+    Backend Integration with ML Service
+        Use axios or node-fetch in Express.js to call the Python ML service.
+
+    Frontend Interaction with Backend and ML Service
+        Make requests from the frontend to the backend, which in turn calls the ML service for predictions.
+    
+
+    see individual folders for more notes specific to them...
