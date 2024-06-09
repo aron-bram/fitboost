@@ -7,6 +7,7 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split
 import pandas as pd
 import os
+from flask import Flask, request, jsonify
 
 # Load pre-trained word2vec model (replace with your preferred model path)
 model = gensim.downloader.load("word2vec-google-news-300")  # Load pre-trained model
@@ -83,3 +84,25 @@ new_text = "Tennis club"
 new_embedding = get_document_embedding(new_text, model)
 predicted_category = classifier.predict([new_embedding])[0]
 print("Predicted category:", predicted_category)
+
+# Create Flask app
+app = Flask(__name__)
+
+@app.route("/classify", methods=["POST"])
+def classify_text():
+  # Get text from request
+  data = request.get_json()
+  if not data or "text" not in data:
+    return jsonify({"error": "Missing text in request body"}), 400
+
+  text = data["text"]
+  text = preprocess_text(text)
+  embedding = get_document_embedding(text, model)
+
+  # Classify text using loaded model
+  prediction = classifier.predict([embedding])[0]
+
+  return jsonify({"text": text, "category": prediction})
+
+if __name__ == "__main__":
+  app.run(debug=True)
