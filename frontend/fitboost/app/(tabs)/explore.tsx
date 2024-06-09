@@ -6,7 +6,7 @@ import { ExternalLink } from '@/components/ExternalLink';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
-import { HelloWave } from '@/components/HelloWave';
+import ClassificationComponent from '@/components/Predictor';
 
 import EmployeeList from '@/components/Employees';
 
@@ -20,6 +20,12 @@ export default function TabTwoScreen() {
         <EmployeeList></EmployeeList>
       </ThemedView>
       <ThemedText>This app includes example code to help you get started.</ThemedText>
+      <Collapsible title="Predict">
+        <ThemedText>
+          Give some text to predict on:
+        </ThemedText>
+        <ClassificationComponent></ClassificationComponent>
+      </Collapsible>
       <Collapsible title="File-based routing">
         <ThemedText>
           This app has two screens:{' '}
