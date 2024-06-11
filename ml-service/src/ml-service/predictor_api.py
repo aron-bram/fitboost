@@ -28,4 +28,4 @@ def classify_text():
 if __name__ == "__main__":
     embedding_model = predictor.download_embedding_model()
     model = predictor.load()
-    app.run(port=5001, debug=True)
+    app.run(host="192.168.0.157", port=5001, debug=True)
