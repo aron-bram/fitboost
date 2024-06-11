@@ -17,7 +17,7 @@ const EmployeeList: React.FC = () => {
   useEffect(() => {
     const fetchEmployees = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/employees');
+        const response = await axios.get('http://192.168.0.157:5000/employees');
         setEmployees(response.data);
       } catch (err) {
         setError(err.message);
