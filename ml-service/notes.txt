@@ -1,1 +1,4 @@
-next step: create an api to access the model
+thoughts after basic setup:
+embeddings are likely out of distribution for my domain, so I could either find a more
+suitable model to get the embeddings, or use a different approach. Due to having access
+to small amounts of data, leveraging a pretrained model would be my way to go about it.
