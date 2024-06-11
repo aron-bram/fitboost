@@ -4,6 +4,7 @@ import cors from "cors";
 
 const app = express();
 const port = 5000;
+const host = "192.168.0.157"
 
 app.use(cors());
 app.use(express.json());
@@ -55,7 +56,7 @@ app.get("/", (_req, res) => {
 });
 
 app.listen(port, () => {
-  console.log(`Server running on http://localhost:${port}`);
+  console.log(`Server running on http://${host}:${port}`);
 });
 
 // Query all employees
