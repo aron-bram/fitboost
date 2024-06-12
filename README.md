@@ -7,7 +7,12 @@ This will slowly evolve into a health/fitness website and application integratin
 1. `cd` into the project root directory
 2. `sh run.sh`
 
-## Branch
+# dev: branches
 
-This integration brach serves the purpose of testing out how the different components of
-the application communicate and connect with each other.
+Integration: initial testing of how each component communicates with the others
+
+Backend: tracks the backend of the project
+
+Frontend: tracks the changes in the frontend of the project
+
+ml-service: tracks changes in the ML services of the project
